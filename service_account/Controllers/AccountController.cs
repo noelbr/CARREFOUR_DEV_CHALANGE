@@ -10,6 +10,7 @@ using service_account.Results;
 using service_account.Requests;
 using service_account.Entities;
 using System.Globalization;
+using service_account.Domain;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,11 +20,13 @@ namespace service_account.Controllers;
 [Route("[controller]")]
 public class AccountController : Controller
 {
-    private readonly UnitOfWork _unitOfWork; 
+    private readonly UnitOfWork _unitOfWork;
+    private readonly AccountDomain _accountDomain;
 
-    public AccountController(IUnitOfWork unitOfWork)
+    public AccountController(IUnitOfWork unitOfWork, IAccountDomain accountDomain )
     {
-        _unitOfWork = (UnitOfWork)unitOfWork; 
+        _unitOfWork = (UnitOfWork)unitOfWork;
+        _accountDomain = (AccountDomain)accountDomain;
     }
 
     [HttpGet]
@@ -45,13 +48,10 @@ public class AccountController : Controller
     public async Task<IActionResult> Post([FromBody] AccountRequest request)
     {
         try
-        {
-            var new_account = new Account { Name = request.Name };
-            _unitOfWork.Account.Add(new_account);
+        { 
+            var account = await _accountDomain.Create(request.Name);
 
-            await _unitOfWork.Complete();
-
-            return new MyOkResult(new_account);
+            return new MyOkResult((AccountResult)account);
         }
         catch (Exception ex)
         {
@@ -73,7 +73,7 @@ public class AccountController : Controller
 
             }
 
-            return new MyOkResult(account);
+            return new MyOkResult((AccountResult)account);
         }
         catch (Exception ex)
         {
@@ -88,20 +88,10 @@ public class AccountController : Controller
     public async Task<IActionResult> Withdrawal(string accountId, [FromBody] TransactionRequest request)
     {
         try
-        {
-            var account = _unitOfWork.Account.SingleOrDefault(x => x.AccountID == accountId);
-            if (account == null)
-            {
-                return new ErrorResult("Account not found");
+        { 
+            var transaction =await _accountDomain.Withdrawal(accountId, request.Value);
 
-            }
-
-
-            var transaction = _unitOfWork.Transaction.Withdrawal(account.AccountID, request.Value);
-
-            await _unitOfWork.Complete();
-
-            return new MyOkResult(transaction);
+            return new MyOkResult((TransactionResult)transaction);
 
         }
         catch (Exception ex)
@@ -119,19 +109,10 @@ public class AccountController : Controller
     {
         try
         {
-            var account = _unitOfWork.Account.SingleOrDefault(x => x.AccountID == accountId);
-            if (account == null)
-            {
-                return new ErrorResult("Account not found");
+            var transaction = await _accountDomain.Deposit(accountId, request.Value);
 
-            }
-
-            var transaction = _unitOfWork.Transaction.Deposit(account.AccountID, request.Value);
-
-
-            await _unitOfWork.Complete();
-
-            return new MyOkResult(transaction);
+            return new MyOkResult((TransactionResult)transaction);
+             
 
         }
         catch (Exception ex)
@@ -167,23 +148,7 @@ public class AccountController : Controller
 
          
     }
-
-    [HttpGet("{accountId}/balance")]
-    public IActionResult Balance(string accountId)
-    {
-        try
-        {
-
-            var balance = _unitOfWork.Transaction.GetBalance(accountId);
-
-            return new MyOkResult(balance);
-        }
-        catch (Exception ex)
-        {
-            return new ErrorResult(ex.Message);
-        }
-    }
-
+     
 
     [HttpGet("{accountId}/report")]
     public IActionResult Report(string accountId, string date)
@@ -202,14 +167,15 @@ public class AccountController : Controller
             {
                 dt_report = DateTime.ParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture);
             }
-
-            if (dt_report == DateTime.MinValue) {
-                return new ErrorResult("Invalid date! use the formart yyyy-MM-dd");
-            } 
-
+             
             var statements = _unitOfWork.Transaction.Find(x => x.AccountID == accountId && x.Created.Date == dt_report.Date);
 
-            return new MyOkResult((ReportResult) statements.ToList());
+            return new MyOkResult((ReportResult)statements.ToList());
+
+        }
+        catch (FormatException ex)
+        {
+            return new ErrorResult("Invalid date! use the formart yyyy-MM-dd");
 
         }
         catch (Exception ex)

@@ -29,8 +29,7 @@ http://localhost:8080/swagger/
 
 - [POST] ACCOUNT/{ID}/withdrawal : Realiza um débito a conta
 - [POST] ACCOUNT/{ID}/deposit :  Realiza um crédito a conta
-- [GET] ACCOUNT/{ID}/statement : Extrato lista toda as transações da conta 
-- [GET] ACCOUNT/{ID}/balance :  Retorna o Saldo da conta
+- [GET] ACCOUNT/{ID}/statement : Extrato lista toda as transações da conta  
 - [GET] ACCOUNT/{ID}/report : Retorna o Relatorio da conta com filto de dia
 
 

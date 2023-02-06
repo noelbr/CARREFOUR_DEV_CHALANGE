@@ -10,6 +10,9 @@ namespace service_account.Entities
 
         public string Name { get; set; }
 
+        public float Balance { get; set; }
+
+
     }
 }
 

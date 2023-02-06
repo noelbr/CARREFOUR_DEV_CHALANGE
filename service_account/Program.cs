@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using service_account.Context;
+using service_account.Domain;
 using service_account.Repositories;
 using service_account.Repositories.Interfaces;
 
@@ -29,6 +30,7 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
+builder.Services.AddTransient<IAccountDomain, AccountDomain>();
 builder.Services.AddControllers();
   
 builder.Services.AddEndpointsApiExplorer();
