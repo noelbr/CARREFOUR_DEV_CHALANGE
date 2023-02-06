@@ -9,11 +9,17 @@ os métodos da API estão documentados com swagger
 
 ## Como executar ?
  
+compitar e executar docker
 ```
 cd service_account 
 docker build -t service_account:latest .
 docker run -d -p 8080:80 service_account
 ```
+
+Acesse o servico no seu browser 
+
+http://localhost:8080/swagger/
+
  
 # API REST 
 
