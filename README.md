@@ -7,19 +7,29 @@ Servido de controle de fluxo de caixa
 Esse servico foi desenvolvido em C# utilizando dotnet.core 7 , Entity Framework e Unity Of Work 
 os métodos da API estão documentados com swagger 
 
+Autenticação com OAUTH2 
+
 ## Como executar ?
  
-compitar e executar docker
+compitar o ambiente
+
 ```
-cd service_account 
-docker build -t service_account:latest .
-docker run -d -p 8080:80 service_account
+docker-compose build
+```
+
+executar o projeto
+```
+docker-compose up
 ```
 
 Acesse o servico no seu browser 
 
 http://localhost:8080/swagger/
 
+Usuário de Teste : 
+
+usuario : bob 
+senha : Pass123$
  
 # API REST 
 

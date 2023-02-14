@@ -11,6 +11,7 @@ using service_account.Requests;
 using service_account.Entities;
 using System.Globalization;
 using service_account.Domain;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,6 +19,7 @@ namespace service_account.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
 public class AccountController : Controller
 {
     private readonly UnitOfWork _unitOfWork;

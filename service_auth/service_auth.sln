@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1704.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "service_auth", "service_auth.csproj", "{21250F1A-7A05-422A-BEE3-DB5E55192D17}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{21250F1A-7A05-422A-BEE3-DB5E55192D17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21250F1A-7A05-422A-BEE3-DB5E55192D17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21250F1A-7A05-422A-BEE3-DB5E55192D17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21250F1A-7A05-422A-BEE3-DB5E55192D17}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3DB991A0-9C20-4AFE-B297-A36C0321A9D7}
+	EndGlobalSection
+EndGlobal
