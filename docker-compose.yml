@@ -1,0 +1,16 @@
+version: "3.2"
+services:
+    auth:
+        build:
+            context: ./service_auth
+            dockerfile: Dockerfile
+        ports: 
+            - '8081:80' 
+    account:
+        build:
+            context: ./service_account/src
+            dockerfile: Dockerfile
+        ports: 
+            - '8080:80'
+        depends_on: 
+            - auth
